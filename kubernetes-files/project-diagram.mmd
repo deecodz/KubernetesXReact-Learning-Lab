@@ -1,0 +1,41 @@
+```mermaid
+graph TD
+  subgraph Local_Dev_Environment
+    A[User's Browser]
+    B[React App (Vite)]
+    A -- HTTP --> B
+  end
+
+  subgraph Docker_Container
+    C[React App Static Build]
+    D[minikube tunnel]
+    C -- Served by --> D
+  end
+
+  subgraph Kubernetes_Cluster
+    E[Namespace: dummy-react-app]
+    F[Deployment: react-app\n(2 replicas)]
+    G[Service: react-app-service\nType: LoadBalancer]
+    H[Pod: busybox]
+    E --> F
+    F -- Pods --> G
+    G -- Exposes --> D
+    E --> H
+  end
+
+  B -- Docker build --> C
+  D -- Docker image --> F
+
+  classDef k8s fill:#e0f7fa,stroke:#00796b,stroke-width:2px;
+  class E,F,G,H k8s;
+```
+
+---
+
+**Diagram Explanation:**
+- The user interacts with the React app locally (Vite dev server).
+- The app is built and containerized with Docker, served by Nginx.
+- In Kubernetes, resources are organized in the `dummy-react-app` namespace:
+  - The React app is deployed as a Deployment (2 replicas), exposed by a LoadBalancer Service.
+  - A BusyBox pod is also present for testing/debugging.
+- The Service exposes the app to the outside world.
