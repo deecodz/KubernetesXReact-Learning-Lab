@@ -49,3 +49,6 @@ This document explains the purpose and learnings from each file in the `kubernet
 
 **Summary:**
 - This simple project taught me how to organize resources with namespaces, deploy and secure applications, expose them with services, and use utility containers for testing in Kubernetes.
+
+  ![image](https://github.com/user-attachments/assets/3b048902-11e2-4d3c-a0e1-25807376ad21)
+
